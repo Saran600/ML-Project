@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t iris-mlops .'
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                sh 'docker tag iris-mlops your-dockerhub-username/iris-mlops'
+                sh 'docker push your-dockerhub-username/iris-mlops'
+            }
+        }
+    }
+}
